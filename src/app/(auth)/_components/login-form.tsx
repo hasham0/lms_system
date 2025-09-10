@@ -1,6 +1,8 @@
 "use client";
 
-import { Chrome, GithubIcon } from "lucide-react";
+import { ChangeEvent, useState, useTransition } from "react";
+import { Chrome, GithubIcon, Loader2, Send } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,15 +14,38 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { authClient } from "@/lib/auth-client";
 
 const LoginForm = () => {
+  const [githubPending, startGithubTransition] = useTransition();
+  const [googlePending, startGoogleTransition] = useTransition();
+  const [email, setEmail] = useState("");
+  const [emailPending, startEmailTransition] = useTransition();
+
+  const signInWithSocialAccount = async (provider: "github" | "google") => {
+    await authClient.signIn.social({
+      provider,
+      callbackURL: "/",
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success(
+            `Signed in with ${provider}, you will be redirected...`
+          );
+        },
+        onError: (error) => {
+          toast.error(error.error.message);
+        },
+      },
+    });
+  };
+
   return (
     <Card>
       {/* Header section */}
       <CardHeader>
         <CardTitle className="text-xl">Welcome back!</CardTitle>
         <CardDescription>
-          Login with your GitHub account, Google account, or Email address
+          Login with your GitHub, Google or Email Account
         </CardDescription>
       </CardHeader>
 
@@ -31,16 +56,40 @@ const LoginForm = () => {
           <Button
             variant="outline"
             className="flex w-full items-center justify-center gap-2"
+            onClick={() =>
+              startGithubTransition(() => signInWithSocialAccount("github"))
+            }
           >
-            <GithubIcon className="size-4" />
-            Sign In with GitHub
+            {githubPending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Loading...</span>
+              </>
+            ) : (
+              <>
+                <GithubIcon className="size-4" />
+                Sign In with GitHub
+              </>
+            )}
           </Button>
           <Button
             variant="outline"
+            onClick={() =>
+              startGoogleTransition(() => signInWithSocialAccount("google"))
+            }
             className="flex w-full items-center justify-center gap-2"
           >
-            <Chrome className="size-4" />
-            Sign In with Google
+            {googlePending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Loading...</span>
+              </>
+            ) : (
+              <>
+                <Chrome className="size-4" />
+                Sign In with Google
+              </>
+            )}
           </Button>
         </div>
 
@@ -57,9 +106,29 @@ const LoginForm = () => {
         <form className="grid gap-3">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="joe@gmail.com" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="joe@gmail.com"
+              value={email}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
+            />
           </div>
-          <Button type="submit">Continue with Email</Button>
+          <Button type="submit">
+            {emailPending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Loading...</span>
+              </>
+            ) : (
+              <>
+                <Send className="size-4" />
+                Continue with Email
+              </>
+            )}
+          </Button>
         </form>
       </CardContent>
     </Card>
