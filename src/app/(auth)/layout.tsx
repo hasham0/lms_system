@@ -1,11 +1,16 @@
-"use client";
-
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
 import { buttonVariants } from "@/components/ui/button";
 
+export const metadata: Metadata = {
+  title: {
+    default: "Authentication",
+    template: "%s | Authentication",
+  },
+};
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center px-4">
