@@ -6,15 +6,16 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --fix",
+    "format": "prettier --write ."
   },
   "lint-staged": {
-    "*.{js,ts,tsx,jsx}": [
-      "prettier --write",
-      "eslint --fix"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ],
-    "*.{json,md,css,html}": [
+    "*.{json,css,md}": [
       "prettier --write"
     ]
   },
