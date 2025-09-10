@@ -11,6 +11,7 @@ export const env = createEnv({
     AUTH_GOOGLE_CLIENT_ID: z.string().min(1),
     AUTH_GOOGLE_CLIENT_SECRET: z.string().min(1),
     RESET_API_KEY: z.string().min(1),
+    ARCJET_API_KEY: z.string().min(1),
   },
   experimental__runtimeEnv: {},
 });
