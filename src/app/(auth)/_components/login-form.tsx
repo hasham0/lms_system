@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Chrome, GithubIcon, Loader2, Send } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -17,11 +18,13 @@ import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
 
 const LoginForm = () => {
+  const router = useRouter();
   const [githubPending, startGithubTransition] = useTransition();
   const [googlePending, startGoogleTransition] = useTransition();
   const [email, setEmail] = useState("");
   const [emailPending, startEmailTransition] = useTransition();
 
+  /* <!-- Social Login Handler --> */
   const signInWithSocialAccount = async (provider: "github" | "google") => {
     await authClient.signIn.social({
       provider,
@@ -36,6 +39,25 @@ const LoginForm = () => {
           toast.error(error.error.message);
         },
       },
+    });
+  };
+
+  /* <!-- Email Login Handler --> */
+  const signWithEmail = () => {
+    startEmailTransition(async () => {
+      await authClient.emailOtp.sendVerificationOtp({
+        email,
+        type: "sign-in",
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success(`Signed in with email, you will be redirected...`);
+            router.push(`/verify-email?email=${email}`);
+          },
+          onError: () => {
+            toast.error("Error while signing in with email");
+          },
+        },
+      });
     });
   };
 
@@ -116,7 +138,7 @@ const LoginForm = () => {
               }
             />
           </div>
-          <Button type="submit">
+          <Button type="submit" disabled={emailPending} onClick={signWithEmail}>
             {emailPending ? (
               <>
                 <Loader2 className="size-4 animate-spin" />
