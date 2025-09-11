@@ -7,6 +7,7 @@ import features from "@/utils/features";
 export default function Home() {
   return (
     <>
+      {/* hero section */}
       <section className="relative py-20">
         <div className="flex flex-col items-center space-y-8 text-center">
           <Badge variant={"outline"}>The Future of Online Education</Badge>
@@ -39,6 +40,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Features */}
       <section className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {features.map((feature, index) => (
           <Card key={index} className="transition-shadow hover:shadow-lg">
