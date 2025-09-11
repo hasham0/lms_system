@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState, useTransition } from "react";
+import { ChangeEvent, FC, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Chrome, GithubIcon, Loader2, Send } from "lucide-react";
 import { toast } from "sonner";
@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
 
-const LoginForm = () => {
+const LoginForm: FC = () => {
   const router = useRouter();
   const [githubPending, startGithubTransition] = useTransition();
   const [googlePending, startGoogleTransition] = useTransition();

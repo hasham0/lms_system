@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { FC, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/input-otp";
 import { authClient } from "@/lib/auth-client";
 
-const VerifyEmailOTPFORM = () => {
+const VerifyEmailOTPFORM: FC = () => {
   const params = useSearchParams();
   const router = useRouter();
   const [otp, setOtp] = useState("");
