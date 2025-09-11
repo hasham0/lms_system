@@ -23,7 +23,7 @@ const navigationItems: Array<NavItemsTS> = [
   },
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/admin-dashboard",
   },
 ];
 const Navbar: FC = () => {
