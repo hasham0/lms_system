@@ -1,5 +1,6 @@
 "use client";
 
+import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import UserDropdown from "@/app/(public)/_components/user-dropdown";
@@ -25,7 +26,7 @@ const navigationItems: Array<NavItemsTS> = [
     href: "/dashboard",
   },
 ];
-const Navbar = () => {
+const Navbar: FC = () => {
   const { data: session, isPending } = authClient.useSession();
   return (
     <header className="bg-background/95 backdrop-blur-[bacdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b">
@@ -54,10 +55,15 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
+          {/* user dropdown and theme toggle */}
           <div className="flex items-center gap-x-4">
             <ThemeToggle />
             {isPending ? null : session ? (
-              <UserDropdown />
+              <UserDropdown
+                name={session.user.name}
+                email={session.user.email}
+                image={session.user.image || ""}
+              />
             ) : (
               <>
                 <Link

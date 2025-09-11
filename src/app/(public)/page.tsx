@@ -24,6 +24,7 @@ export default function Home() {
               href="/courses"
               className={buttonVariants({
                 size: "lg",
+                className: "text-white",
               })}
             >
               Explore Courses
