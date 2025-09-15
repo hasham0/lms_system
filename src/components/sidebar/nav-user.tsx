@@ -103,13 +103,13 @@ export function NavUser() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/">
+                <Link href="/admin-dashboard">
                   <LayoutDashboardIcon />
                   Dashboard
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/">
+                <Link href="/admin-dashboard/courses">
                   <BookOpenCheckIcon />
                   Courses
                 </Link>
