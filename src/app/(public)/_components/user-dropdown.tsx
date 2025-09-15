@@ -1,13 +1,11 @@
 import React, { FC } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   BookOpenIcon,
   ChevronDownIcon,
   HomeIcon,
   LogOutIcon,
 } from "lucide-react";
-import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { authClient } from "@/lib/auth-client";
+import useSignOut from "@/hooks/use-signout";
 
 type Props = {
   name: string;
@@ -28,22 +26,8 @@ type Props = {
 };
 
 const UserDropdown: FC<Props> = ({ name, email, image }) => {
-  const router = useRouter();
+  const handleSignOut = useSignOut();
 
-  /* <!-- logout handler --> */
-  const handleLogout = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          router.push("/");
-          toast.success("Signed out successfully");
-        },
-        onError: () => {
-          toast.error("Error signing out");
-        },
-      },
-    });
-  };
   return (
     <DropdownMenu>
       {/* profile image */}
@@ -53,7 +37,10 @@ const UserDropdown: FC<Props> = ({ name, email, image }) => {
           className="h-auto p-0 hover:bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0"
         >
           <Avatar>
-            <AvatarImage src={image || "/assets/profile.png"} alt={name} />
+            <AvatarImage
+              src={image ?? `https://avatar.vercel.sh/${email}`}
+              alt={name}
+            />
             <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon
@@ -100,7 +87,7 @@ const UserDropdown: FC<Props> = ({ name, email, image }) => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
+        <DropdownMenuItem onClick={handleSignOut}>
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
           <span>Logout</span>
         </DropdownMenuItem>
