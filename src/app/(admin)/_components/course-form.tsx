@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SparkleIcon } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import slugify from "slugify";
+import RichTextEditor from "@/components/rich-text-editor/editor";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -145,11 +146,7 @@ const CourseForm: FC = () => {
                 <FormItem className="w-full">
                   <FormLabel>Full Description</FormLabel>
                   <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Detailed description of the course"
-                      className="min-h-[120px]"
-                    />
+                    <RichTextEditor field={field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -37,10 +37,7 @@ const UserDropdown: FC<Props> = ({ name, email, image }) => {
           className="h-auto p-0 hover:bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0"
         >
           <Avatar>
-            <AvatarImage
-              src={image ?? `https://avatar.vercel.sh/${email}`}
-              alt={name}
-            />
+            <AvatarImage src={image} alt={name} />
             <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
           </Avatar>
           <ChevronDownIcon
