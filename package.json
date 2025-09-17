@@ -73,10 +73,11 @@
     "react-resizable-panels": "^3.0.5",
     "recharts": "2.15.4",
     "resend": "^6.0.3",
+    "slugify": "^1.6.6",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
-    "zod": "^4.1.5"
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
